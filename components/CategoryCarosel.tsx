@@ -9,22 +9,29 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { CategoryItem } from "@/types/category";
 import * as React from "react";
+import { useRouter } from "next/navigation";
+import { CategoryItem } from "@/types/category";
 
-const categories: CategoryItem[] = [
-  { id: 1, name: "Technology", icon: "" },
-  { id: 2, name: "Travel", icon: "" },
-  { id: 3, name: "Health", icon: "" },
-  { id: 4, name: "Food", icon: "" },
-  { id: 5, name: "Finance", icon: "" },
-  { id: 6, name: "Sports", icon: "" },
-  { id: 7, name: "Lifestyle", icon: "" },
-];
-
-export function Category() {
+export function CategoryCarosel() {
+  const router = useRouter()
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [count, setCount] = React.useState(0);
+  const [categories, setCategories] = React.useState<CategoryItem[]>([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/categories");
+        const data = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   React.useEffect(() => {
     if (!api) return;
@@ -52,6 +59,7 @@ export function Category() {
           <CarouselItem
             key={item.id}
             className="pl-2 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6"
+            // onClick={() => router.push(`posts/${item.id}`)}
           >
             <div className="p-2">
               <Card className="h-full">

@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export const Featured = () => {
   return (
-    <div className="">
+    <div className="mt-10">
       <h1 className="text-4xl font-bold mb-8">
         <b>Hey hello ! </b> dolor sit amet consectetur adipisicing elit.
       </h1>
@@ -12,7 +12,7 @@ export const Featured = () => {
           <Image
             src="/code.jpg"
             alt="Featured Story"
-            width={500}
+            width={800}
             height={300}
             className="rounded-lg md:w-full"
           />
