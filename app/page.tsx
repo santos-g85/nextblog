@@ -2,7 +2,7 @@ import { Featured } from "@/components/Featured";
 import { Navbar } from "@/components/Navbar";
 import { CategoryCarosel } from "@/components/CategoryCarosel";
 import { RecentPosts } from "@/components/RecentPosts";
-import { HomeBlogs } from "@/components/HomeBlogs";
+import { HomeBlogs } from "@/components/HomeBlogs"; 
 import { Footer } from "@/components/Footer";
 
 export default function IndexPage() {
@@ -15,8 +15,8 @@ export default function IndexPage() {
           
           <h2 className="text-xl font-semibold">Categories</h2>
           <CategoryCarosel />
-          <HomeBlogs/>
-        </div>
+          <HomeBlogs />        
+          </div>
 
         {/* Sidebar */}
         <aside className="space-y-6">

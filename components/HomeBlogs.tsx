@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const HomeBlogs = () => {
+export function HomeBlogs(){
   const router = useRouter();
   const [posts, setPosts] = useState([]);
 
@@ -15,16 +15,19 @@ export const HomeBlogs = () => {
     const fetchData = async () => {
       const postRes = await fetch('/api/posts');
       const postsData = await postRes.json();
+      console.log(postsData)
       setPosts(postsData);
     };
 
     fetchData();
   }, []);
+
+
   return (
     <div className="">
       <h1 className="text-3xl font-bold mb-8 text-center">Recommended Posts</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post:any) => (
+        {posts?.map((post:any) => (
           <Card
             key={post.id}
             className="hover:shadow-lg transition-shadow duration-300"
@@ -47,3 +50,4 @@ export const HomeBlogs = () => {
     </div>
   );
 };
+
