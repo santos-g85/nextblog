@@ -6,5 +6,6 @@ export interface NavItem {
 }
 export interface NavCommandItem {
   name: string,
-  href?: string
+  slug: string
+  
 }

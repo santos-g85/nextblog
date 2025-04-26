@@ -1,5 +1,8 @@
 "use client";
 
+import { categories } from "@/data/fakedata";
+import { menuItems } from "@/data/fakedata";
+
 export const Footer = () => {
   return (
     <footer className="">
@@ -14,20 +17,18 @@ export const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Categories</h3>
           <ul className="text-sm text-gray-300 space-y-1">
-            <li>Technology</li>
-            <li>Travel</li>
-            <li>Health</li>
-            <li>Finance</li>
+            {categories.map((item)=>(
+              <li>{item.name}</li>
+            ))}
           </ul>
         </div>
 
         <div>
           <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
           <ul className="text-sm text-gray-300 space-y-1">
-            <li>Home</li>
-            <li>Posts</li>
-            <li>Contact</li>
-            <li>Privacy Policy</li>
+            {menuItems.map((item)=>(
+              <li>{item.name}</li>
+            ))}
           </ul>
         </div>
 
@@ -42,7 +43,7 @@ export const Footer = () => {
       </div>
 
       <div className="text-center text-sm text-gray-400 mt-8">
-        © {new Date().getFullYear()} Your Blog. All rights reserved.
+        © {new Date().getFullYear()} {process.env.NEXT_PUBLIC_BLOG_COPYRIGHT}. All rights reserved.
       </div>
     </footer>
   );

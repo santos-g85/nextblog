@@ -9,39 +9,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { NavItem } from "@/types/nav";
-import { NavCommandItem } from "@/types/nav";
 import { AlignJustify } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { Input } from "./ui/input";
-import {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandItem,
-  CommandEmpty,
-} from "@/components/ui/command";
+import { CommandMenu } from "./CommandMenu";
 import { useState } from "react";
 
-const menuItems: NavItem[] = [
-  { name: "Home", href: "/" },
-  { name: "Contact Us", href: "/contact" },
-  { name: "About", href: "/about" },
-];
+import { menuItems } from "@/data/fakedata";
+import { CommandItems } from "@/data/fakedata";
 
-const CommandItems : NavCommandItem[]=[
-    {name:"Home",href:"/"},
-    {name:"Contact Us",href:"/contact"},
-    {name:"About",href:"/about"} ,
-    {name:"hello",href:""},
-    {name:"Hi",href:""},  
-    {name:"Ho",href:""},  
-    {name:"Hee",href:""},  
-    {name:"Hom",href:""},  
-    {name:"He",href:""},  
-]
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -120,30 +97,9 @@ export const Navbar = () => {
           <ThemeToggle />
         </div>
       </nav>
-
-
-      <CommandDialog open={openCommand} 
-      onOpenChange={setOpenCommand}>
-        <div className="command-dialog">
-        <CommandInput placeholder="Search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          {CommandItems.map((item) => (
-            <CommandItem
-              key={item.href}
-              onSelect={() => {
-                if (item.href) window.location.href = item.href;
-                setOpenCommand(false);
-              }}
-            >
-              {item.name}
-            </CommandItem>
-          ))}
-          
-        </CommandList>
-        </div>
-      </CommandDialog>
+      <CommandMenu open={openCommand} setOpen={setOpenCommand} />
     </>
   );
 };
+
 

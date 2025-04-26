@@ -1,29 +1,31 @@
 "use client";
 
-import { Button } from "./ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { posts } from "@/data/fakedata";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PostPagination } from "./PostPagination";
 
 export function HomeBlogs(){
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1); 
+  const [totalpages ,settotalpages] = useState(1);
+  const limit =process.env.NEXT_PUBLIC_PAGINATION_LIMIT;
 
   useEffect(() => {
     const fetchData = async () => {
-      const postRes = await fetch('/api/posts');
+      const postRes = await fetch(`/api/posts?page=${page}&limit=${limit}`);
       const postsData = await postRes.json();
-      console.log(postsData)
-      setPosts(postsData);
+      setPosts(postsData.posts);
+      console.log(postsData.posts);
+      settotalpages(postsData.totalpages)
     };
-
     fetchData();
-  }, []);
+  }, [page]);
 
 
   return (
+    <>
     <div className="">
       <h1 className="text-3xl font-bold mb-8 text-center">Recommended Posts</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -48,6 +50,8 @@ export function HomeBlogs(){
         ))}
       </div>
     </div>
+    <PostPagination page={page} setPage={setPage} totalpages={totalpages}/>
+    </>
   );
 };
 

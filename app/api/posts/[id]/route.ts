@@ -1,22 +1,25 @@
 import { fakePrisma } from "@/lib/fakeprisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export default async function handler(req:any, res:any) {
-  const {
-    query: { id },
-    method,
-  } = req;
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
 
-  if (method === 'GET') {
-    try{
-        const data = await fakePrisma.post.findUnique({ where: { id: Number(id) } });
-        if (!data) {
-            return res.status(404).json({ message: 'Post not found' });
-        }
-        return res.status(200).json(data);
-    }catch(error){
-        return res.status(400).json(error)
+const id = params.id
+  // const id = req.nextUrl.searchParams.get('id');
+  // console.log("id:", id);
+  try {
+    if (!id) {
+      return NextResponse.json({ message: 'ID is required' }, { status: 400 });
     }
+    
+    const data = await fakePrisma.post.findUnique({ where: { id: Number(id) } });
+    if (!data) {
+      return NextResponse.json({ message: 'Post not found' }, { status: 404 });
+    }
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Internal server error', error },
+      { status: 500 }
+    );
   }
-
-  res.status(405).json({ message: 'Method not allowed' });
 }
